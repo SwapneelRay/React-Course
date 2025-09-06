@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { EXAMPLES } from "../../data.js";
-import './Examples.css'
+import "./Examples.css";
 import TabButton from "../../components/TabButton/TabButton.jsx";
+import Tabs from "../Tabs.jsx";
 import Section from "../Section.jsx";
-export default function Examples(){
-    const [val, setVal] = useState("");
+export default function Examples() {
+  const [val, setVal] = useState("");
   // let tabContent = <p>please select a topic</p>;
   // if(val){
   //   <div id="tab-content">
@@ -19,9 +20,12 @@ export default function Examples(){
     setVal(selected);
     //console.log(val)
   }
-    return(
-        <Section title="Examples" id="examples">
-          <menu>
+  return (
+    <Section title="Examples" id="examples">
+      <Tabs
+     // buttonsContainer="menu"//or{Section} for custom component
+        buttons={
+          <>
             <TabButton
               isSelected={val === "components" ? "active" : undefined}
               onClick={() => selectHandler("components")}
@@ -46,19 +50,22 @@ export default function Examples(){
             >
               State
             </TabButton>
-          </menu>
-          {!val ? (
-            <p>please select a topic</p>
-          ) : (
-            <div id="tab-content">
-              <h3>{EXAMPLES[val].title}</h3>
-              <p>{EXAMPLES[val].description}</p>
-              <pre>
-                <code>{EXAMPLES[val].code}</code>
-              </pre>
-            </div>
-          )}
-          {/* {tabContent} */}
-        </Section>
-    );
+          </>
+        }
+      >
+        {!val ? (
+          <p>please select a topic</p>
+        ) : (
+          <div id="tab-content">
+            <h3>{EXAMPLES[val].title}</h3>
+            <p>{EXAMPLES[val].description}</p>
+            <pre>
+              <code>{EXAMPLES[val].code}</code>
+            </pre>
+          </div>
+        )}
+        {/* {tabContent} */}
+      </Tabs>
+    </Section>
+  );
 }
